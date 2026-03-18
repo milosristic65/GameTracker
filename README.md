@@ -16,6 +16,3 @@ Save files are located here: C:\Users\\\<USER\>\Documents\Game Tracker
 # Requriements
 - Windows 10/11
 - .NET 8.0
-
-# Download Build 
-Itch.io: [https://bloodassassin89.itch.io/game-tracker](https://bloodassassin89.itch.io/game-tracker)
