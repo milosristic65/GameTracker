@@ -1,0 +1,62 @@
+﻿<ui:FluentWindow x:Class="GameTrackerWPF.Views.EditGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameTrackerWPF.Views"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        mc:Ignorable="d"
+        Title="EditGameWindow" Height="250" Width="400">
+    <Grid Background="#121212">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!-- Title Bar -->
+        <Border 
+            Background="#1E1E1E">
+            <ui:TitleBar Grid.Row="0"
+                Height="30"
+                Padding="8"
+                Title="Edit"
+                ShowMinimize="False"
+                ShowMaximize="False"
+                ShowClose="True" />
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="20">
+
+            <TextBlock Text="Title"/>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Playtime" Margin="0,10,0,0"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="111" />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="111" />
+                    <ColumnDefinition Width="25" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Text="{Binding Hours, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="1" Text="h" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="2" Text="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="3" Text="m" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+
+            <TextBlock Text="Cover Image" Margin="0,10,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding CoverPath, UpdateSourceTrigger=PropertyChanged}" 
+                         IsReadOnly="True"
+                         Width="250"/>
+                <Button Content="Browse" Command="{Binding BrowseCoverCommand}" Margin="8,0,0,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Button Content="Save" Command="{Binding SaveCommand}" Margin="0,0,8,0"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</ui:FluentWindow>
