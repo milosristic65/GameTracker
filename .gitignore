@@ -1,1 +1,28 @@
+# Build output
 bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docview
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# App specific
+*.log
