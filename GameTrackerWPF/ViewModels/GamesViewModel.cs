@@ -38,8 +38,19 @@ namespace GameTrackerWPF.ViewModels
                 // Check if the game is already in the list
                 if (Games.Any(game => game.Path == filePath))
                 {
-                    new WPFUI.MessageBox { Title = "Warning", Content = "The game is already on the list!", CloseButtonText = "OK" }.ShowDialogAsync();
-                    return;
+                    var removeGameModal = new WPFUI.MessageBox
+                    {
+                        Title = "Warning!",
+                        Content = "The game is already on the list!\nAre you sure you want to add it anyway?",
+                        PrimaryButtonText = "Yes",
+                        CloseButtonText = "No"
+                    };
+
+                    var removeGameResult = removeGameModal.ShowDialogAsync().GetAwaiter().GetResult();
+                    if (removeGameResult != WPFUI.MessageBoxResult.Primary)
+                    {
+                        return;
+                    }
                 }
 
                 Games.Add(new Game
@@ -56,14 +67,14 @@ namespace GameTrackerWPF.ViewModels
         {
             if (id == Guid.Empty)
             {
-                new WPFUI.MessageBox { Title = "Error", Content = "Unexpected error occurred!", CloseButtonText = "OK" }.ShowDialogAsync();
+                new WPFUI.MessageBox { Title = "Error!", Content = "Unexpected error occurred!", CloseButtonText = "OK" }.ShowDialogAsync();
                 return;
             }
 
             var gameToRemove = Games.FirstOrDefault(game => game.Id == id);
             if (gameToRemove == null)
             {
-                new WPFUI.MessageBox { Title = "Error", Content = "Unexpected error occurred!", CloseButtonText = "OK" }.ShowDialogAsync();
+                new WPFUI.MessageBox { Title = "Error!", Content = "Unexpected error occurred!", CloseButtonText = "OK" }.ShowDialogAsync();
                 return;
             }
 
