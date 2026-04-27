@@ -10,7 +10,8 @@
     <Border CornerRadius="4" 
             Background="#1E1E1E"
             BorderBrush="#373737"
-            BorderThickness="1">
+            BorderThickness="1"
+            DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
@@ -42,7 +43,8 @@
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Border.OpacityMask>
-                <Image Source="{Binding CoverPath, ElementName=Root}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="{Binding CoverImage}" 
+                       Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
 
             <TextBlock Grid.Row="2" Text="PLAY TIME"

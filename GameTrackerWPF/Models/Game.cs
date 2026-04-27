@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using System.Windows.Media.Imaging;
 
 namespace GameTrackerWPF.Models
 {
@@ -18,7 +20,15 @@ namespace GameTrackerWPF.Models
         public string CoverPath
         {
             get => _coverPath;
-            set { _coverPath = value; OnPropertyChanged(); }
+            set { _coverPath = value; OnPropertyChanged(); ReloadCover(); }
+        }
+
+        private BitmapImage? _coverImage;
+        [JsonIgnore]
+        public BitmapImage? CoverImage
+        {
+            get => _coverImage;
+            set { _coverImage = value; OnPropertyChanged(); }
         }
 
         private DateTime _dateAdded = DateTime.Now;
@@ -64,6 +74,24 @@ namespace GameTrackerWPF.Models
             Playtime = game.Playtime;
             IsRunning = game.IsRunning;
             DateAdded = game.DateAdded;
+            ReloadCover();
+        }
+
+        private void ReloadCover()
+        {
+            if (string.IsNullOrEmpty(CoverPath) || !File.Exists(CoverPath))
+            {
+                CoverImage = null;
+                return;
+            }
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(CoverPath, UriKind.Absolute);
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+            CoverImage = bitmapImage;
         }
     }
 }

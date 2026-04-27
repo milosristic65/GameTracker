@@ -2,6 +2,7 @@
 using GameTrackerWPF.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Wpf.Ui.Input;
 using WPFUI = Wpf.Ui.Controls;
 
@@ -18,8 +19,8 @@ namespace GameTrackerWPF.Views
         public static readonly DependencyProperty PathProperty =
             DependencyProperty.Register("Path", typeof(string), typeof(GameCard), new PropertyMetadata(""));
 
-        public static readonly DependencyProperty CoverPathProperty =
-            DependencyProperty.Register("CoverPath", typeof(string), typeof(GameCard), new PropertyMetadata(""));
+        public static readonly DependencyProperty CoverImageProperty =
+            DependencyProperty.Register("CoverImage", typeof(BitmapImage), typeof(GameCard));
 
         public static readonly DependencyProperty IsRunningProperty =
             DependencyProperty.Register("IsRunning", typeof(bool), typeof(GameCard), new PropertyMetadata(false));
@@ -45,15 +46,15 @@ namespace GameTrackerWPF.Views
             set => SetValue(PathProperty, value);
         }
 
-        public string CoverPath
+        public BitmapImage CoverImage
         {
-            get => (string)GetValue(CoverPathProperty);
-            set => SetValue(CoverPathProperty, value);
+            get => (BitmapImage)GetValue(CoverImageProperty);
+            set => SetValue(CoverImageProperty, value);
         }
 
-        public string IsRunning
+        public bool IsRunning
         {
-            get => (string)GetValue(IsRunningProperty);
+            get => (bool)GetValue(IsRunningProperty);
             set => SetValue(IsRunningProperty, value);
         }
 

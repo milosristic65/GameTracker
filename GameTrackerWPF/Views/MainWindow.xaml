@@ -40,7 +40,7 @@
                         <views:GameCard 
                                 Id="{Binding Id}"    
                                 Title="{Binding Title}" 
-                                CoverPath="{Binding CoverPath}"
+                                CoverImage="{Binding CoverImage}"
                                 Playtime="{Binding Playtime}"
                                 Width="230"
                                 Height="420"

@@ -2,12 +2,10 @@
 using GameTrackerWPF.MVVM;
 using GameTrackerWPF.Services;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
-using Wpf.Ui.Input;
+using System.Windows.Media.Imaging;
+using WPFUI = Wpf.Ui.Controls;
 
 namespace GameTrackerWPF.ViewModels
 {
@@ -123,6 +121,20 @@ namespace GameTrackerWPF.ViewModels
 
                 string extension = Path.GetExtension(_copyGame.CoverPath);
                 string destination = Path.Combine(coversFolder, $"{_originalGame.Id}{extension}");
+
+                // Delete the old cover if exists
+                if (!string.IsNullOrEmpty(_originalGame.CoverPath) && File.Exists(_originalGame.CoverPath))
+                {
+                    try
+                    {
+                        File.Delete(_originalGame.CoverPath);
+                    }
+                    catch
+                    {
+                        new WPFUI.MessageBox { Title = "Error!", Content = "Failed to delete old cover!", CloseButtonText = "OK" }.ShowDialogAsync();
+                        return;
+                    }
+                }
 
                 // Only copy if source and destination are different
                 if (!string.Equals(_copyGame.CoverPath, destination, StringComparison.OrdinalIgnoreCase))

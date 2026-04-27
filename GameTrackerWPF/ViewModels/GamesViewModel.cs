@@ -89,6 +89,22 @@ namespace GameTrackerWPF.ViewModels
             var removeGameResult = removeGameModal.ShowDialogAsync().GetAwaiter().GetResult();
             if (removeGameResult == WPFUI.MessageBoxResult.Primary)
             {
+                // Delete the cover if added
+                string coverPath = gameToRemove.CoverPath;
+                if (!string.IsNullOrEmpty(coverPath) && System.IO.File.Exists(coverPath))
+                {
+                    try
+                    {
+                        gameToRemove.CoverPath = "";
+                        System.IO.File.Delete(coverPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        new WPFUI.MessageBox { Title = "Error!", Content = $"Failed to delete cover image: {ex.Message}", CloseButtonText = "OK" }.ShowDialogAsync();
+                        return;
+                    }
+                }
+
                 Games.Remove(gameToRemove);
                 _storage.Save(Games.ToList());
             }
