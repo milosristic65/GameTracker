@@ -46,7 +46,6 @@ namespace GameTrackerWPF.ViewModels
 
         public GamesViewModel()
         {
-            // Setting commands
             AddGameCommand = new RelayCommand(execute => AddGame());
             RemoveGameCommand = new RelayCommand<Guid>(id => RemoveGame(id));
             ToggleSortOrderCommand = new RelayCommand(execute => IsAscending = !IsAscending);

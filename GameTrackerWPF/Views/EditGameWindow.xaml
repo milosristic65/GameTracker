@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameTrackerWPF.Views"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:tray="clr-namespace:Wpf.Ui.Tray.Controls;assembly=Wpf.Ui.Tray"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
@@ -28,6 +29,7 @@
                 ShowMaximize="False"
                 ShowClose="True" />
         </Border>
+
 
         <StackPanel Grid.Row="1" Margin="20">
 

@@ -21,6 +21,7 @@ namespace GameTrackerWPF.Converters
             string time = value.ToString() ?? "";
             uint totalMinutes = 0;
 
+            // Has both hours and minutes
             if (time.Contains('h'))
             {
                 var parts = time.Split('h');
@@ -38,6 +39,7 @@ namespace GameTrackerWPF.Converters
                     }
                 }
             }
+            // Has just minutes
             else if (time.Contains('m'))
             {
                 var minPart = time.Replace("m", "").Trim();

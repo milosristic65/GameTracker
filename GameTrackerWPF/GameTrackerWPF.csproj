@@ -6,11 +6,30 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <AssemblyName>GameTracker</AssemblyName>
+    <UseWindowsForms>False</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\icon.png" />
+    <None Remove="Assets\icon16.png" />
+    <None Remove="Assets\icon256.png" />
+    <None Remove="Assets\icon32.png" />
+    <None Remove="Assets\icon48.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="WPF-UI" Version="4.2.1" />
     <PackageReference Include="WPF-UI.Abstractions" Version="4.2.1" />
+    <PackageReference Include="WPF-UI.Tray" Version="4.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\icon16.png" />
+    <Resource Include="Assets\icon256.png" />
+    <Resource Include="Assets\icon32.png" />
+    <Resource Include="Assets\icon48.png" />
   </ItemGroup>
 
 </Project>

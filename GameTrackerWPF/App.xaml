@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GameTrackerWPF"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:converters="clr-namespace:GameTrackerWPF.Converters"
-             StartupUri="Views/MainWindow.xaml">
+             xmlns:converters="clr-namespace:GameTrackerWPF.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -1,11 +1,9 @@
-﻿using GameTrackerWPF.Enums;
-using GameTrackerWPF.Models;
+﻿using GameTrackerWPF.Models;
 using GameTrackerWPF.MVVM;
 using GameTrackerWPF.Services;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows.Media.Imaging;
 using WPFUI = Wpf.Ui.Controls;
 
 namespace GameTrackerWPF.ViewModels

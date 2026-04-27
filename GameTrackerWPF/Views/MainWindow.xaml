@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GameTrackerWPF"
         xmlns:views="clr-namespace:GameTrackerWPF.Views"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:tray="clr-namespace:Wpf.Ui.Tray.Controls;assembly=Wpf.Ui.Tray"
         mc:Ignorable="d"
         Title="Game Tracker" Height="620" Width="1040">
     <Grid Background="#121212">
@@ -26,6 +27,20 @@
                      ShowMaximize="True"
                      ShowClose="True" />
         </Border>
+
+        <!--Tray Icon Menu-->
+        <tray:NotifyIcon
+            Icon="pack://application:,,,/Assets/icon16.png"
+            TooltipText="Game Tracker"
+            MenuOnRightClick="True">
+
+            <tray:NotifyIcon.Menu>
+                <ContextMenu>
+                    <MenuItem Header="Quit" Click="MenuItem_Click"/>
+                </ContextMenu>
+            </tray:NotifyIcon.Menu>
+
+        </tray:NotifyIcon>
 
         <!-- List of games -->
         <Grid Grid.Row="1">
