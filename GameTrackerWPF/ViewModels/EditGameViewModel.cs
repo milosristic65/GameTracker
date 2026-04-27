@@ -113,7 +113,9 @@ namespace GameTrackerWPF.ViewModels
         private void Save()
         {
             // Save the cover image
-            if (!string.IsNullOrEmpty(_copyGame.CoverPath) && File.Exists(_copyGame.CoverPath))
+            if (_copyGame.CoverPath != _originalGame.CoverPath && 
+                !string.IsNullOrEmpty(_copyGame.CoverPath) && 
+                File.Exists(_copyGame.CoverPath))
             {
                 string coversFolder = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
