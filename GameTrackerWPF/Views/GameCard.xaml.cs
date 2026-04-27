@@ -2,6 +2,8 @@
 using GameTrackerWPF.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Input;
+using WPFUI = Wpf.Ui.Controls;
 
 namespace GameTrackerWPF.Views
 {
@@ -74,18 +76,19 @@ namespace GameTrackerWPF.Views
 
             if (games == null)
             {
-                MessageBox.Show("Games data not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                new WPFUI.MessageBox { Title = "Error", Content = "Games data not found.", CloseButtonText = "OK" }.ShowDialogAsync();
                 return;
             }
 
             var editedGame = games.FirstOrDefault(game => game.Id == Id);
             if (editedGame == null)
             {
-                MessageBox.Show("Game not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                new WPFUI.MessageBox { Title = "Error", Content = "Game not found.", CloseButtonText = "OK" }.ShowDialogAsync();
                 return;
             }
 
             var editWindow = new EditGameWindow(editedGame, games);
+            editWindow.Owner = window;
             editWindow.ShowDialog();
         }
     }

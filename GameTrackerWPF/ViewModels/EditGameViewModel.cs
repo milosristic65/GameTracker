@@ -1,6 +1,7 @@
 ﻿using GameTrackerWPF.Models;
 using GameTrackerWPF.MVVM;
 using GameTrackerWPF.Services;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,12 +54,19 @@ namespace GameTrackerWPF.ViewModels
             set { _copyGame.Playtime = value; OnPropertyChanged(); }
         }
 
+        public string GamePath
+        {
+            get => _copyGame.Path;
+            set { _copyGame.Path = value; OnPropertyChanged(); }
+        }
+
         public string CoverPath
         {
             get => _copyGame.CoverPath;
             set { _copyGame.CoverPath = value; OnPropertyChanged(); }
         }
 
+        public RelayCommand BrowseGamePathCommand { get; }
         public RelayCommand BrowseCoverCommand { get; }
         public RelayCommand SaveCommand { get; }
         public RelayCommand CancelCommand { get; }
@@ -72,22 +80,33 @@ namespace GameTrackerWPF.ViewModels
             _copyGame = new Game(editedGame);
             _games = games;
 
+            BrowseGamePathCommand = new RelayCommand(execute => BrowseGamePath());
             BrowseCoverCommand = new RelayCommand(execute => BrowseCover());
             SaveCommand = new RelayCommand(execute => Save());
             CancelCommand = new RelayCommand(execute => Cancel());
         }
 
+        private void BrowseGamePath()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Select Game Path";
+            openFileDialog.Filter = "Executable Files (*.exe)|*.exe";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                GamePath = openFileDialog.FileName;
+            }
+        }
+
         private void BrowseCover()
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Title = "Select Cover Image",
-                Filter = "Image Files (*.jpg, *.png)|*.jpg;*.jpeg;*.png"
-            };
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Select Cover Image";
+            openFileDialog.Filter = "Image Files (*.jpg, *.png)|*.jpg;*.jpeg;*.png";
 
-            if (dialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true)
             {
-                CoverPath = dialog.FileName;
+                CoverPath = openFileDialog.FileName;
             }
         }
 
