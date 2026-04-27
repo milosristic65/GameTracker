@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GameTrackerWPF.Enums;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;

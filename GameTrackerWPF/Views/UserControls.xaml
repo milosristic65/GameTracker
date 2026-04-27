@@ -6,12 +6,21 @@
              xmlns:local="clr-namespace:GameTrackerWPF.Views"
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:enums="clr-namespace:GameTrackerWPF.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="40"
              d:DesignWidth="800">
 
     <UserControl.Resources>
         <sys:Double x:Key="ControlHeight">36</sys:Double>
+
+        <ObjectDataProvider x:Key="SortingMethods" 
+                        MethodName="GetValues" 
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:SortingMethod"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
 
     <Border             
@@ -24,24 +33,35 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Sort by:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <ComboBox Grid.Column="1" Margin="5,10" Height="{StaticResource ControlHeight}" SelectedIndex="0">
-                <ComboBoxItem>Added</ComboBoxItem>
-                <ComboBoxItem>Playtime</ComboBoxItem>
-                <ComboBoxItem>Alphabetical</ComboBoxItem>
-            </ComboBox>
+            <ComboBox Grid.Column="1" Margin="5,10" Height="{StaticResource ControlHeight}" 
+                      ItemsSource="{Binding Source={StaticResource SortingMethods}}"
+                      SelectedValue="{Binding SelectedSorting}" />
 
-            <Button Grid.Column="2" Margin="5,10" Padding="0" Height="{StaticResource ControlHeight}" Width="{StaticResource ControlHeight}">
+            <Button Grid.Column="2" Margin="5,10" Padding="0" 
+                    Height="{StaticResource ControlHeight}" 
+                    Width="{StaticResource ControlHeight}"
+                    Command="{Binding ToggleSortOrderCommand}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
                         <Setter Property="Border.CornerRadius" Value="99"/>
                     </Style>
                 </Button.Style>
-                <ui:SymbolIcon Symbol="ArrowDown28" FontSize="18" Foreground="#FAFAFA"/>
+                <ui:SymbolIcon FontSize="18" Foreground="#FAFAFA">
+                    <ui:SymbolIcon.Style>
+                        <Style TargetType="ui:SymbolIcon">
+                            <Setter Property="Symbol" Value="ArrowUp28"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAscending}" Value="False">
+                                    <Setter Property="Symbol" Value="ArrowDown28"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ui:SymbolIcon.Style>
+                </ui:SymbolIcon>
             </Button>
 
             <Button Grid.Column="4" x:Name="btnAddGame" 

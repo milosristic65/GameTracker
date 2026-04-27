@@ -1,4 +1,5 @@
-﻿using GameTrackerWPF.Models;
+﻿using GameTrackerWPF.Enums;
+using GameTrackerWPF.Models;
 using GameTrackerWPF.MVVM;
 using GameTrackerWPF.Services;
 using Microsoft.Win32;
@@ -14,9 +15,10 @@ namespace GameTrackerWPF.ViewModels
         private readonly Game _originalGame;
         private readonly Game _copyGame;
 
-        private readonly GameStorageService _storage = new();
+        private readonly GameStorageService _storage = new GameStorageService();
 
         private ObservableCollection<Game> _games { get; set; }
+        public ObservableCollection<Game> Games { get; set; }
 
         public uint Hours
         {
