@@ -9,14 +9,16 @@
     <AssemblyName>GameTracker</AssemblyName>
     <UseWindowsForms>False</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\icon.png" />
     <None Remove="Assets\icon16.png" />
-    <None Remove="Assets\icon256.png" />
-    <None Remove="Assets\icon32.png" />
-    <None Remove="Assets\icon48.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,9 +29,6 @@
 
   <ItemGroup>
     <Resource Include="Assets\icon16.png" />
-    <Resource Include="Assets\icon256.png" />
-    <Resource Include="Assets\icon32.png" />
-    <Resource Include="Assets\icon48.png" />
   </ItemGroup>
 
 </Project>
