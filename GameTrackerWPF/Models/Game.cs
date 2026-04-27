@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace GameTrackerWPF.Models
 {
@@ -42,6 +43,7 @@ namespace GameTrackerWPF.Models
         }
 
         private bool _isRunning;
+        [JsonIgnore]
         public bool IsRunning
         {
             get => _isRunning;
