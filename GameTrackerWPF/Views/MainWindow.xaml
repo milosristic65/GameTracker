@@ -42,6 +42,7 @@
                                 Title="{Binding Title}" 
                                 CoverImage="{Binding CoverImage}"
                                 Playtime="{Binding Playtime}"
+                                IsRunning="{Binding IsRunning}"
                                 Width="230"
                                 Height="420"
                                 Margin="8"/>

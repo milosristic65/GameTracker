@@ -4,6 +4,9 @@ using GameTrackerWPF.MVVM;
 using GameTrackerWPF.Services;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Threading;
 using Wpf.Ui.Input;
 using WPFUI = Wpf.Ui.Controls;
 
@@ -30,18 +33,38 @@ namespace GameTrackerWPF.ViewModels
             set { _isAscending = value; OnPropertyChanged(); ApplySorting(); }
         }
 
+        private bool _isRunning;
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set { _isRunning = value; OnPropertyChanged(); }
+        }
 
+        private readonly DispatcherTimer _processTimer = new DispatcherTimer();
+        private readonly DispatcherTimer _playtimeTimer = new DispatcherTimer();
         private readonly GameStorageService _storage = new GameStorageService();
 
         public GamesViewModel()
         {
+            // Setting commands
             AddGameCommand = new RelayCommand(execute => AddGame());
             RemoveGameCommand = new RelayCommand<Guid>(id => RemoveGame(id));
             ToggleSortOrderCommand = new RelayCommand(execute => IsAscending = !IsAscending);
 
+            // Loading games
             var savedGames = _storage.Load();
             Games = new ObservableCollection<Game>(savedGames);
             ApplySorting();
+
+            // Running processes tick
+            _processTimer.Interval = TimeSpan.FromSeconds(3);
+            _processTimer.Tick += CheckRunningProcesses;
+            _processTimer.Start();
+
+            // Playtime tick
+            _playtimeTimer.Interval = TimeSpan.FromMinutes(1);
+            _playtimeTimer.Tick += IncrementPlaytime;
+            _playtimeTimer.Start();
         }
 
         private void AddGame()
@@ -145,6 +168,29 @@ namespace GameTrackerWPF.ViewModels
             {
                 Games.Add(game);
             }
+        }
+
+
+        private void CheckRunningProcesses(object? sender, EventArgs e)
+        {
+            Process[] processes = Process.GetProcesses();
+
+            foreach (Game game in Games)
+            {
+                game.IsRunning = processes.Any(process => process.ProcessName.Equals(
+                    Path.GetFileNameWithoutExtension(game.Path),
+                    StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        private void IncrementPlaytime(object? sender, EventArgs e)
+        {
+            foreach (Game game in Games.Where(game => game.IsRunning))
+            {
+                game.Playtime++;
+            }
+
+            _storage.Save(Games.ToList());
         }
 
     }

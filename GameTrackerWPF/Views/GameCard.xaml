@@ -7,6 +7,10 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              x:Name="Root"
              mc:Ignorable="d" d:DesignHeight="350" d:DesignWidth="200">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
+
     <Border CornerRadius="4" 
             Background="#1E1E1E"
             BorderBrush="#373737"
@@ -48,21 +52,33 @@
             </Border>
 
             <TextBlock Grid.Row="2" Text="PLAY TIME"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Center"/>
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center"/>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
                 <ui:SymbolIcon Symbol="XboxController32" 
                    HorizontalAlignment="Left"
-                   FontSize="30" 
+                   FontSize="25" 
                    Margin="0,0,8,0"
                    Foreground="#22C55E"
                    Filled="True"
-                   Visibility="Collapsed"/>
+                   Visibility="{Binding IsRunning, ElementName=Root, Converter={StaticResource BoolToVisibility}}"/>
 
                 <TextBlock Text="{Binding Playtime, ElementName=Root, Converter={StaticResource MinutesToTimeConverter}}"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                    <Setter Property="Foreground" Value="#22C55E"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </StackPanel>
 
             <Grid Grid.Row="4" VerticalAlignment="Bottom">
