@@ -1,4 +1,4 @@
-# GameTracker
+# Game Tracker
 Track your game playtime!
 
 <img src="./GameTrackerWPF/Assets/Screenshots/screenshot_1.webp" alt="Screenshot_1" width="500"/>
