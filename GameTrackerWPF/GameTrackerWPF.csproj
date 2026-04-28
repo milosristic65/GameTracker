@@ -31,4 +31,8 @@
     <Resource Include="Assets\icon16.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Screenshots\" />
+  </ItemGroup>
+
 </Project>
