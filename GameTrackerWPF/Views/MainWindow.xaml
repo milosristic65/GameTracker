@@ -44,26 +44,29 @@
 
         <!-- List of games -->
         <Grid Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding Games}" Padding="16,16,16,0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" Margin="-8"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <views:GameCard 
-                                Id="{Binding Id}"    
-                                Title="{Binding Title}" 
-                                CoverImage="{Binding CoverImage}"
-                                Playtime="{Binding Playtime}"
-                                IsRunning="{Binding IsRunning}"
-                                Width="230"
-                                Height="420"
-                                Margin="8"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Games}" Padding="16,16,16,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <views:GameCard 
+                        Id="{Binding Id}"    
+                        Title="{Binding Title}" 
+                        CoverImage="{Binding CoverImage}"
+                        Playtime="{Binding Playtime}"
+                        IsRunning="{Binding IsRunning}"
+                        Width="230"
+                        Height="420"
+                        Margin="8"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
 
         <!-- Controls for Adding and Sorting -->
