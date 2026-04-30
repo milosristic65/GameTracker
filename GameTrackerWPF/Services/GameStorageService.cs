@@ -1,6 +1,7 @@
 ﻿using GameTrackerWPF.Models;
 using System.IO;
 using System.Text.Json;
+using WPFUI = Wpf.Ui.Controls;
 
 namespace GameTrackerWPF.Services
 {
@@ -40,7 +41,7 @@ namespace GameTrackerWPF.Services
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Save error: {ex.Message}");
+                new WPFUI.MessageBox { Title = "Error!", Content = ex.Message, CloseButtonText = "OK" }.ShowDialogAsync();
             }
         }
     }

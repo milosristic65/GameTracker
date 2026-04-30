@@ -19,18 +19,30 @@ namespace GameTrackerWPF.ViewModels
         public RelayCommand<Guid> RemoveGameCommand { get; }
         public RelayCommand ToggleSortOrderCommand { get; }
 
-        private SortingMethod _selectedSorting = SortingMethod.Added;
+        private AppSettings _settings;
+
         public SortingMethod SelectedSorting
         {
-            get => _selectedSorting;
-            set { _selectedSorting = value; OnPropertyChanged(); ApplySorting(); }
+            get => _settings.SortingMethod;
+            set
+            {
+                _settings.SortingMethod = value;
+                OnPropertyChanged();
+                ApplySorting();
+                SaveSettings();
+            }
         }
 
-        private bool _isAscending = false;
         public bool IsAscending
         {
-            get => _isAscending;
-            set { _isAscending = value; OnPropertyChanged(); ApplySorting(); }
+            get => _settings.IsAscending;
+            set
+            {
+                _settings.IsAscending = value;
+                OnPropertyChanged();
+                ApplySorting();
+                SaveSettings();
+            }
         }
 
         private bool _isRunning;
@@ -42,7 +54,8 @@ namespace GameTrackerWPF.ViewModels
 
         private readonly DispatcherTimer _processTimer = new DispatcherTimer();
         private readonly DispatcherTimer _playtimeTimer = new DispatcherTimer();
-        private readonly GameStorageService _storage = new GameStorageService();
+        private readonly GameStorageService _gameStorageService = new GameStorageService();
+        private readonly SettingsService _settingsService = new SettingsService();
 
         public GamesViewModel()
         {
@@ -50,9 +63,13 @@ namespace GameTrackerWPF.ViewModels
             RemoveGameCommand = new RelayCommand<Guid>(id => RemoveGame(id));
             ToggleSortOrderCommand = new RelayCommand(execute => IsAscending = !IsAscending);
 
+            // Load settings
+            _settings = _settingsService.Load();
+
             // Loading games
-            var savedGames = _storage.Load();
+            var savedGames = _gameStorageService.Load();
             Games = new ObservableCollection<Game>(savedGames);
+
             ApplySorting();
 
             // Running processes tick
@@ -100,7 +117,7 @@ namespace GameTrackerWPF.ViewModels
                     Path = filePath,
                 });
 
-                _storage.Save(Games.ToList());
+                _gameStorageService.Save(Games.ToList());
             }
         }
 
@@ -147,17 +164,17 @@ namespace GameTrackerWPF.ViewModels
                 }
 
                 Games.Remove(gameToRemove);
-                _storage.Save(Games.ToList());
+                _gameStorageService.Save(Games.ToList());
             }
         }
 
         private void ApplySorting()
         {
-            IOrderedEnumerable<Game> sortedGames = _selectedSorting switch
+            IOrderedEnumerable<Game> sortedGames = _settings.SortingMethod switch
             {
-                SortingMethod.Added => _isAscending ? Games.OrderBy(game => game.DateAdded) : Games.OrderByDescending(game => game.DateAdded),
-                SortingMethod.Alphabetical => _isAscending ? Games.OrderBy(game => game.Title) : Games.OrderByDescending(game => game.Title),
-                SortingMethod.Playtime => _isAscending ? Games.OrderBy(game => game.Playtime) : Games.OrderByDescending(game => game.Playtime),
+                SortingMethod.Added => _settings.IsAscending ? Games.OrderBy(game => game.DateAdded) : Games.OrderByDescending(game => game.DateAdded),
+                SortingMethod.Alphabetical => _settings.IsAscending ? Games.OrderBy(game => game.Title) : Games.OrderByDescending(game => game.Title),
+                SortingMethod.Playtime => _settings.IsAscending ? Games.OrderBy(game => game.Playtime) : Games.OrderByDescending(game => game.Playtime),
                 _ => Games.OrderBy(game => game.DateAdded)
             };
 
@@ -189,8 +206,11 @@ namespace GameTrackerWPF.ViewModels
                 game.Playtime++;
             }
 
-            _storage.Save(Games.ToList());
+            _gameStorageService.Save(Games.ToList());
         }
-
+        private void SaveSettings()
+        {
+            _settingsService.Save(_settings);
+        }
     }
 }
