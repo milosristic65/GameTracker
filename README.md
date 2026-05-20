@@ -1,5 +1,5 @@
 # Game Tracker
-Track your game playtime!
+Track playtime across non-Steam games.
 
 <img src="./GameTrackerWPF/Assets/Screenshots/screenshot_1.webp" alt="Screenshot_1" width="500"/>
 
