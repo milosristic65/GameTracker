@@ -151,15 +151,21 @@ namespace GameTrackerWPF.ViewModels
                 string coverPath = gameToRemove.CoverPath;
                 if (!string.IsNullOrEmpty(coverPath) && System.IO.File.Exists(coverPath))
                 {
-                    try
+                    // Check if any other game uses the same cover
+                    bool usedByOthers = Games.Any(game => game.Id != id && game.CoverPath == coverPath);
+
+                    if (!usedByOthers)
                     {
-                        gameToRemove.CoverPath = "";
-                        System.IO.File.Delete(coverPath);
-                    }
-                    catch (Exception ex)
-                    {
-                        new WPFUI.MessageBox { Title = "Error!", Content = $"Failed to delete cover image: {ex.Message}", CloseButtonText = "OK" }.ShowDialogAsync();
-                        return;
+                        try
+                        {
+                            gameToRemove.CoverPath = "";
+                            System.IO.File.Delete(coverPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            new WPFUI.MessageBox { Title = "Error!", Content = $"Failed to delete cover image: {ex.Message}", CloseButtonText = "OK" }.ShowDialogAsync();
+                            return;
+                        }
                     }
                 }
 
